@@ -6,7 +6,7 @@ RUN mkdir /home/node/src
 
 WORKDIR /home/node/src
 
-COPY --chown=node:node package-lock.json package.json ./
+COPY --chown=node:node api/package-lock.json api/package.json ./api/
 
 RUN npm ci
 
