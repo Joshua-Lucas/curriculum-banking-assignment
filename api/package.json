@@ -1,0 +1,17 @@
+{
+  "name": "mthree-bankingInterfaceApi",
+  "version": "1.0.0",
+  "description": "This is an API for the Introduction to React Course Backing INterface Assignment",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "author": "Joshua Lucas",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}
