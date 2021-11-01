@@ -54,6 +54,10 @@ data "aws_iam_policy_document" "ecs_service_standard" {
 
     actions = [
       "ec2:DescribeTags",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:BatchGetImage",
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:GetAuthorizationToken",
       "ecs:DeregisterContainerInstance",
       "ecs:DiscoverPollEndpoint",
       "ecs:Poll",
@@ -63,7 +67,7 @@ data "aws_iam_policy_document" "ecs_service_standard" {
       "ecs:Submit*",
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
-      "logs:PutLogEvents"
+      "logs:PutLogEvents",
     ]
 
     resources = [
@@ -106,40 +110,40 @@ data "aws_iam_policy_document" "ecs_service_scaling" {
 }
 
 resource "aws_iam_policy" "ecs_service_elb" {
-  name = "curriculum-react-banking-interface-elb"
-  path = "/"
+  name        = "curriculum-react-banking-interface-elb"
+  path        = "/"
   description = "Allow access to the service elb"
 
   policy = data.aws_iam_policy_document.ecs_service_elb.json
 }
 
 resource "aws_iam_policy" "ecs_service_standard" {
-  name = "curriculum-react-banking-interface-standard"
-  path = "/"
+  name        = "curriculum-react-banking-interface-standard"
+  path        = "/"
   description = "Allow standard ecs actions"
 
   policy = data.aws_iam_policy_document.ecs_service_standard.json
 }
 
 resource "aws_iam_policy" "ecs_service_scaling" {
-  name = "curriculum-react-banking-interface-scaling"
-  path = "/"
+  name        = "curriculum-react-banking-interface-scaling"
+  path        = "/"
   description = "Allow ecs service scaling"
 
   policy = data.aws_iam_policy_document.ecs_service_scaling.json
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_service_elb" {
-  role = aws_iam_role.ecs_service.name
+  role       = aws_iam_role.ecs_service.name
   policy_arn = aws_iam_policy.ecs_service_elb.arn
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_service_standard" {
-  role = aws_iam_role.ecs_service.name
+  role       = aws_iam_role.ecs_service.name
   policy_arn = aws_iam_policy.ecs_service_standard.arn
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_service_scaling" {
-  role = aws_iam_role.ecs_service.name
+  role       = aws_iam_role.ecs_service.name
   policy_arn = aws_iam_policy.ecs_service_scaling.arn
 }
