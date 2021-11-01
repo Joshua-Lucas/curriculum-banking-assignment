@@ -11,8 +11,8 @@ on:
 env:
   AWS_REGION: us-east-2
   ECR_REPOSITORY: curriculum-react-banking-interface
-  ECS_SERVICE: curriculum-react-banking-interface-cluster
-  ECS_CLUSTER: curriculum-react-banking-api
+  ECS_SERVICE: curriculum-react-banking-interface-runner
+  ECS_CLUSTER: curriculum-react-banking-interface-cluster
   ECS_TASK_DEFINITION: .aws/task-def.json
   CONTAINER_NAME: curriculum-react-banking-interface-api
 
