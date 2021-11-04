@@ -1,7 +1,10 @@
+import express from 'express'
+import { migrateDB } from "../database/createDatabase.js"
 
-const express = require('express')
 const app = express()
 const port = 3000
+
+migrateDB()
 
 app.get('/', (req, res) => {
   res.send('Hello to the Bank API for Introduction to React!')
