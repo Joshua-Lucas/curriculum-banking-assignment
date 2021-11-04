@@ -1,6 +1,8 @@
-FROM node:16-alpine
+FROM node:16-bullseye-slim
 
 USER node
+
+RUN mkdir /home/node/db
 
 RUN mkdir /home/node/src
 
