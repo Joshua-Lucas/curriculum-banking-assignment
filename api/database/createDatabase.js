@@ -1,16 +1,25 @@
 import sqlite3 from 'sqlite3'
 import path from 'path'
+import fs from 'fs'
 import { migrateUp } from './migrations/migrate.js';
 
 var sqlite = sqlite3.verbose()
 
-var db = new sqlite.Database(`${path.resolve('../db/test.db')}`, function(err){
+// Creates directory to hold database if one does not exists yet.
+if(fs.existsSync(`${path.resolve('../db')}`) !== true){
+  fs.mkdirSync("../db")
+}
+
+// Creates a Database connection
+var db = new sqlite.Database(`${path.resolve('../db/data.db')}`, function(err){
     if(err){
         console.log(err)
     }
     console.log("Connected to bank db")
 });
 
+
+// Migrates the Database tables and then seeds from the custom data and model factories.
 export function migrateDB(){db.serialize(function() {
   migrateUp(db)
 
