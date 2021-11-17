@@ -9,7 +9,5 @@ module.exports = {
     },
     useNullAsDefault: true,
   },
-  migrations: {
-    directory: path.join(__dirname, "../Database/Migrations"), //--Changed this line
-  },
+
 };
