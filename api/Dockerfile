@@ -1,6 +1,8 @@
-FROM node:16-bullseye-slim
+FROM node:16-bullseye
 
 USER node
+
+RUN apt install sqlite3
 
 RUN mkdir /home/node/db
 
