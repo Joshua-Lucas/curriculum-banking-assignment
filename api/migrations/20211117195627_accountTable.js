@@ -1,14 +1,17 @@
 exports.up = function (knex) {
   return knex.schema.createTable("account", function (table) {
     table.increments("account_id").primary();
-    table.string("account_creation_date");
+    table.timestamp("created_at", { useTz: true });
+    table.integer("account_number");
+    table.integer("routing_number").defaultTo(136090340);
+
     //   FOREIGN KEYS
     table
       .integer("account_type_id")
       .unsigned()
       .references("account_type_id")
       .inTable("account_type")
-      .onDelete("NO ACTION")
+      .onDelete("SET NULL")
       .onUpdate("CASCADE");
     table
       .integer("customer_id INTEGER")
