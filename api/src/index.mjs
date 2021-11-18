@@ -3,14 +3,17 @@ dotenv.config();
 
 import express from "express";
 import createError from "http-errors";
-import { seedCustomers } from "../database/seeders/customers.mjs";
+import { migrateUpAndSeed, resetSeededData } from "../seeders/seedDb.mjs";
 
 // App
 const app = express();
 const port = 3000;
 app.use(express.json());
 
-seedCustomers();
+migrateUpAndSeed();
+
+// setTimeout(resetSeededData, 10000);
+
 // Middleware
 
 // Routes
