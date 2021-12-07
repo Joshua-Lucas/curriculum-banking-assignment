@@ -1,6 +1,6 @@
 // This seeder creates default 3 default customers
 import faker from "faker";
-import { createNewCustomer } from "../src/models/customerModel.mjs";
+import { createNewCustomer } from "../src/models/customersModel.mjs";
 
 export function seedCustomers() {
   // Generates fake customer data
