@@ -19,7 +19,6 @@ export function compareCredentials(password, hash) {
 }
 
 export async function createNewCustomer(customer) {
-  console.log(customer);
   const hash = await hashPassword(customer.password);
   await db("customer").insert({
     first_name: customer.first_name,
