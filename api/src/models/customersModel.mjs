@@ -9,13 +9,11 @@ const salt = parseInt(process.env.SALT_ROUNDS);
 export const hashPassword = function (pass) {
   return bcrypt.hash(pass, salt, null);
 };
-export function compareCredentials(password, hash) {
-  return bcrypt.compare(password, hash, function (err, result) {
-    if (err) {
-      return err;
-    }
-    return result;
-  });
+export async function compareCredentials(password, hash) {
+  return bcrypt
+    .compare(password, hash)
+    .then((result) => result)
+    .catch((err) => err);
 }
 
 export async function createNewCustomer(customer) {
@@ -26,4 +24,13 @@ export async function createNewCustomer(customer) {
     email: customer.email,
     password: hash,
   });
+}
+
+export async function getCustomer(customer) {
+  return await db("customer")
+    .where("email", "=", customer.email)
+    .then((results) => {
+      return results;
+    })
+    .catch((err) => console.error(err));
 }
