@@ -1,9 +1,9 @@
 import HttpStatus from "http-status-codes";
-import { deleteAccount } from "../models/accountsModel.mjs";
 import {
   getAllAccountsOwnedByTheCustomer,
   getAnAccountOwnedByTheCustomer,
   createAccount,
+  deleteAccount,
 } from "../models/accountsModel.mjs";
 import { AccountErrors } from "../utils/errors.mjs";
 
@@ -19,7 +19,7 @@ export async function index(req, res) {
       res.status(HttpStatus.OK).json(results);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
@@ -37,7 +37,7 @@ export async function show(req, res) {
       res.status(HttpStatus.OK).json(result);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
@@ -50,7 +50,7 @@ export async function create(req, res) {
     const result = await createAccount(newAccount);
     res.status(HttpStatus.CREATED).json(result);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
@@ -72,7 +72,7 @@ export async function destroy(req, res) {
       res.sendStatus(HttpStatus.NO_CONTENT);
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
