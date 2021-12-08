@@ -5,6 +5,7 @@ import express from "express";
 import createError from "http-errors";
 import { migrateUpAndSeed, resetSeededData } from "../seeders/seedDb.mjs";
 import accountsRouter from "./router/accountsRouter.mjs";
+import customersRouter from "./router/customersRouter.mjs";
 
 // App
 const app = express();
@@ -17,9 +18,10 @@ resetSeededData();
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("Hello to the Bank API for Introduction to React!");
+  res.send("Hello, welcome to the Bank API for Introduction to React!");
 });
 
+app.use("/customers", customersRouter);
 app.use("/accounts", accountsRouter);
 
 export const startServer = () => {
