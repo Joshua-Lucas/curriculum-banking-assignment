@@ -1,4 +1,4 @@
-// This seeder creates default 3 default customers
+// This seeder creates by default 3 default customers
 import faker from "faker";
 import { createNewCustomer } from "../src/models/customersModel.mjs";
 
@@ -8,24 +8,23 @@ export function seedCustomers() {
     {
       first_name: faker.name.firstName().toLowerCase(),
       last_name: faker.name.lastName().toLowerCase(),
-      email: "customer01@hotmail.com",
+      email: "good_vibz1966@gmail.com",
       password: "purple-lizard",
     },
     {
       first_name: faker.name.firstName(2).toLowerCase(),
       last_name: faker.name.lastName(2).toLowerCase(),
-      email: "customer02@yahoo.com",
+      email: "surf-usa1963@yahoo.com",
       password: "yellow-finch",
     },
     {
       first_name: faker.name.firstName().toLowerCase(),
       last_name: faker.name.lastName().toLowerCase(),
-      email: "sherzog@yahoo.com",
+      email: "kokomo_1988@hotmail.com",
       password: "blue-flamingo",
     },
   ];
 
-  console.log(customerData);
   // Adds fake data to database
   customerData.forEach((customer) => {
     createNewCustomer(customer);
