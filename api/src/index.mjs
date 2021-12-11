@@ -6,6 +6,7 @@ import createError from "http-errors";
 import { migrateUpAndSeed, resetSeededData } from "../seeders/seedDb.mjs";
 import accountsRouter from "./router/accountsRouter.mjs";
 import customersRouter from "./router/customersRouter.mjs";
+import transactionsRouter from "./router/transactionsRouter.mjs";
 
 // App
 const app = express();
@@ -23,6 +24,7 @@ app.get("/", (req, res) => {
 
 app.use("/customers", customersRouter);
 app.use("/accounts", accountsRouter);
+app.use("/transactions", transactionsRouter);
 
 export const startServer = () => {
   try {
