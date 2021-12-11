@@ -3,6 +3,15 @@ import config from "../../knexfile.js";
 const db = knex(config.development);
 
 // GET ALL TRANSACTION EVENTS FOR A SPECIFIC USER.
+export async function getAllTransactionEventsForAnAccount(accountId) {
+  return await db("transaction_event")
+    .select("*")
+    .where("account_id", "=", accountId)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => console.error(err));
+}
 
 // GET A SINGLE TRANSACTION
 
