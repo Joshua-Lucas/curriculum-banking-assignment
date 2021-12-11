@@ -1,3 +1,4 @@
+import { createTransactionEventType } from "../src/models/transactionsModel.mjs";
 export const transactionTypes = [
   "transfer",
   "withdrawal",
@@ -7,6 +8,7 @@ export const transactionTypes = [
 ];
 
 export function seedTransactionTypes() {
-  console.log("transaction types");
-  // transactionTypes.forEach((type) => {});
+  transactionTypes.forEach((type) => {
+    createTransactionEventType(type);
+  });
 }

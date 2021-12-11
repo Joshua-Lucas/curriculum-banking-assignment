@@ -3,7 +3,8 @@ exports.up = function (knex) {
     table.increments("merchant_id").primary();
     table.string("merchant_name");
     table.string("merchant_phone");
-    table.string("merchant_location");
+    table.string("merchant_city");
+    table.string("merchant_state_abbreviation");
     table.string("merchant_description");
   });
 };

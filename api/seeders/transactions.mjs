@@ -1,18 +1,20 @@
 // There are 300 merchants and 3 customers and 5 transaction types
 import faker from "faker";
+import { createNewTransactionEvent } from "../src/models/transactionsModel.mjs";
+
 var transactions = [];
-
-for (let i = 0; i < 100; i++) {
-  let transaction = {
-    transaction_event_date: faker.date.recent(53, new Date()),
-    transaction_event_amount: getTransAmount(i),
-    transaction_type_id: getTransType(i),
-    merchant_id: getMerchantId(i),
-    account_id: faker.datatype.number({ min: 1, max: 3 }),
-  };
-  transactions.push(transaction);
+for (let i = 1; i <= 3; i++) {
+  for (let j = 0; j < 100; j++) {
+    let transaction = {
+      transaction_event_date: faker.date.recent(53, new Date()),
+      transaction_event_amount: getTransAmount(j),
+      transaction_type_id: getTransType(j),
+      merchant_id: getMerchantId(j),
+      account_id: i,
+    };
+    transactions.push(transaction);
+  }
 }
-
 function getTransAmount(index) {
   switch (index % 25) {
     case 0:
@@ -45,6 +47,7 @@ function getMerchantId(index) {
 }
 
 export function seedTransactionEvents() {
-  console.log("Transactions");
-  // transactions.forEach((event) => {});
+  transactions.forEach((event) => {
+    createNewTransactionEvent(event);
+  });
 }
