@@ -14,8 +14,19 @@ const db = knex(config.development);
 // --- GET ---
 export async function getAllAccountsOwnedByTheCustomer(customerId) {
   return await db("account")
+    .select(
+      "account_id",
+      "created_at",
+      "account_number",
+      "routing_number",
+      "account_type"
+    )
+    .leftJoin(
+      "account_type",
+      "account.account_type_id",
+      "account_type.account_type_id"
+    )
     .where("customer_id", "=", customerId)
-    .select("*")
     .then(function (result) {
       return result;
     })
@@ -30,9 +41,20 @@ export async function getAnAccountOwnedByTheCustomer(
   accountNumber
 ) {
   return await db("account")
+    .select(
+      "account_id",
+      "created_at",
+      "account_number",
+      "routing_number",
+      "account_type"
+    )
+    .leftJoin(
+      "account_type",
+      "account.account_type_id",
+      "account_type.account_type_id"
+    )
     .where("customer_id", "=", customerId)
     .andWhere("account_number", "=", accountNumber)
-    .select("*")
     .then((results) => results)
     .catch((err) => err);
 }
@@ -63,7 +85,6 @@ export async function deleteAccount(accountNumber, customerId) {
 
   //CATCHES IF THE ACCOUNT DOES NOT EXISTS FOR THE REQUESTING USER AND SUBMITS FALSE.
   if (userOwnsAccount <= 0) {
-    console.log(false);
     return false;
   }
 
