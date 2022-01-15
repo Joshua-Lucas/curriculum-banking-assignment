@@ -34,7 +34,7 @@ export async function getAllTransactionEventsForAnAccount(accountId) {
     .catch((err) => console.error(err));
 }
 
-// GET A SINGLE TRANSACTION ON AN ACCOUNT
+// GET A SINGLE TRANSACTION IN AN ACCOUNT
 export async function getATransactionEventsForAnAccount(
   transactionId,
   accountId
