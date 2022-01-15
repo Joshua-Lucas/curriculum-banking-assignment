@@ -48,6 +48,27 @@ export async function createNewTransactionEvent(transactionInfo) {
 }
 
 // --- DELETE TRANSACTION  ---
+export async function deleteTransactionEvent(transactionId, accountId) {
+  // CHECKS THAT THERE IS AN TRANSACTION THAT IS ASSOCIATE WITH THE ACCOUNT SUBMITTING THE DELETE REQUEST.
+  let getCount = await db("transaction_event")
+    .count("*")
+    .where("account_id", "=", accountId)
+    .andWhere("transaction_event_id", "=", transactionId);
+
+  // GETS THE COUNT. COUNT SHOULD BE 0 or 1 SINCE TRANSACTION IDS ARE UNIQUE
+  let transactionsBelongsToAccount = getCount[0]["count(*)"];
+
+  //CATCHES IF THE TRANSACTION DOES NOT EXISTS FOR THE REQUESTING ACCOUNT AND SUBMITS FALSE.
+  if (transactionsBelongsToAccount <= 0) {
+    return false;
+  }
+
+  // IF THE ACCOUNT DOES EXISTS FOR THE REQUESTING TRANSACTION THEN DELETION REQUEST IS PROCESSED.
+  return await db("transaction_event")
+    .where("account_id", "=", accountId)
+    .andWhere("transaction_event_id", "=", transactionId)
+    .del();
+}
 
 export async function createSeedTransactionEvent(transactionInfo) {
   await db("transaction_event").insert({
