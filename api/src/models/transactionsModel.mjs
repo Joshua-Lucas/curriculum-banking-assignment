@@ -34,7 +34,41 @@ export async function getAllTransactionEventsForAnAccount(accountId) {
     .catch((err) => console.error(err));
 }
 
-// GET A SINGLE TRANSACTION
+// GET A SINGLE TRANSACTION ON AN ACCOUNT
+export async function getATransactionEventsForAnAccount(
+  transactionId,
+  accountId
+) {
+  return await db("transaction_event")
+    .select(
+      "transaction_event_id",
+      "transaction_event_date",
+      "transaction_event_amount",
+      "account_id",
+      "merchant_name",
+      "merchant_phone",
+      "merchant_city",
+      "merchant_state_abbreviation",
+      "merchant_description",
+      "transaction_type"
+    )
+    .leftJoin(
+      "merchant",
+      "transaction_event.merchant_id",
+      "merchant.merchant_id"
+    )
+    .leftJoin(
+      "transaction_type",
+      "transaction_event.transaction_type_id",
+      "transaction_type.transaction_type_id"
+    )
+    .where("account_id", "=", accountId)
+    .andWhere("transaction_event_id", "=", transactionId)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => console.error(err));
+}
 
 //  --- POST TRANSACTION ---
 export async function createNewTransactionEvent(transactionInfo) {
