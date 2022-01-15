@@ -3,6 +3,7 @@ import {
   createNewTransactionEvent,
   deleteTransactionEvent,
   getAllTransactionEventsForAnAccount,
+  getATransactionEventsForAnAccount,
 } from "../models/transactionsModel.mjs";
 import { TransactionEventErrors } from "../utils/errors.mjs";
 
@@ -25,6 +26,29 @@ export async function index(req, res) {
   }
 }
 
+// GET A SINGLE TRANSACTION FOR SPECIFIED ACCOUNT
+export async function show(req, res) {
+  const accountId = parseInt(req.body.account_id);
+  const transactionId = req.params.transId;
+
+  try {
+    const result = await getATransactionEventsForAnAccount(
+      transactionId,
+      accountId
+    );
+    if (result.length === 0) {
+      res
+        .status(HttpStatus.NOT_FOUND)
+        .send(TransactionEventErrors.NO_TRANSACTIONS_FOUND);
+    } else {
+      res.status(HttpStatus.OK).json(result);
+    }
+  } catch (error) {
+    console.error(error);
+    res.sendStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+}
+
 // CREATES A NEW TRANSACTION EVENT FOR THE SPECIFIED ACCOUNT
 export async function create(req, res) {
   const newTransEvent = req.body;
@@ -40,7 +64,6 @@ export async function create(req, res) {
 // DELETES A NEW TRANSACTION EVENT FOR THE SPECIFIED ACCOUNT
 export async function destroy(req, res) {
   const accountId = parseInt(req.body.account_id);
-
   const transactionId = req.params.transId;
   try {
     const result = await deleteTransactionEvent(transactionId, accountId);
