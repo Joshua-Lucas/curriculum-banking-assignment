@@ -13,4 +13,5 @@ export const AccountErrors = {
 
 export const TransactionEventErrors = {
   NO_TRANSACTIONS_FOUND: "no transactions found.",
+  NOT_AUTHORIZED_TO_DELETE: "account requesting does not own this transaction.",
 };
