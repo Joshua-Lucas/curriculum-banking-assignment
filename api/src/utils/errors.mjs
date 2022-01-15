@@ -10,3 +10,8 @@ export const AccountErrors = {
   NO_ACCOUNT_FOUND: "this user does not own an account with that number.",
   NOT_AUTHORIZED_TO_DELETE: "user requesting does not own this account.",
 };
+
+export const TransactionEventErrors = {
+  NO_TRANSACTIONS_FOUND: "no transactions found.",
+  NOT_AUTHORIZED_TO_DELETE: "account requesting does not own this transaction.",
+};

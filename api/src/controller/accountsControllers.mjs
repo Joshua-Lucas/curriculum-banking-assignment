@@ -27,7 +27,7 @@ export async function index(req, res) {
 // GETS A SINGLE ACCOUNT FOR THE SPECIFIED USER
 export async function show(req, res) {
   const customerId = parseInt(req.body.customer_id);
-  const accountId = parseInt(req.params.accountNumber);
+  const accountId = req.params.accountNumber;
 
   try {
     const result = await getAnAccountOwnedByTheCustomer(customerId, accountId);
@@ -58,7 +58,7 @@ export async function create(req, res) {
 // DELETES A SINGLE ACCOUNT FOR THE SPECIFIED USER
 export async function destroy(req, res) {
   const customerId = parseInt(req.body.customer_id);
-  const accountId = parseInt(req.params.accountNumber);
+  const accountId = req.params.accountNumber;
   try {
     const result = await deleteAccount(accountId, customerId);
 
@@ -69,7 +69,7 @@ export async function destroy(req, res) {
     } else if (result.length === 0) {
       res.status(HttpStatus.NOT_FOUND).send(AccountErrors.NO_ACCOUNT_FOUND);
     } else {
-      res.sendStatus(HttpStatus.NO_CONTENT);
+      res.status(HttpStatus.NO_CONTENT).send("Successful Deletion");
     }
   } catch (error) {
     console.error(error);

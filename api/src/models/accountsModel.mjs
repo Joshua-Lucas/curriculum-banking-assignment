@@ -1,19 +1,32 @@
 /**
  * This account model holds the business logic for retrieving, creating, and deleting accounts.
- * The two available account types are {id: 1, "Checking"} and {id: 2, "Savings"}. There will be no business logic for creating new account types. These account types are set by the seeder file at seeders/account_types.mjs
+ * The two available account types are {id: 1, "Checking"} and {id: 2, "Savings"}. These account types are set by the seeder file at seeders/account_types.mjs
  */
 
 import knex from "knex";
 import config from "../../knexfile.js";
 const db = knex(config.development);
 
-// CRUD FUNCTIONS FOR THE MODEL
+/**
+ * CRUD FUNCTIONS
+ */
 
 // --- GET ---
 export async function getAllAccountsOwnedByTheCustomer(customerId) {
   return await db("account")
+    .select(
+      "account_id",
+      "created_at",
+      "account_number",
+      "routing_number",
+      "account_type"
+    )
+    .leftJoin(
+      "account_type",
+      "account.account_type_id",
+      "account_type.account_type_id"
+    )
     .where("customer_id", "=", customerId)
-    .select("*")
     .then(function (result) {
       return result;
     })
@@ -28,9 +41,20 @@ export async function getAnAccountOwnedByTheCustomer(
   accountNumber
 ) {
   return await db("account")
+    .select(
+      "account_id",
+      "created_at",
+      "account_number",
+      "routing_number",
+      "account_type"
+    )
+    .leftJoin(
+      "account_type",
+      "account.account_type_id",
+      "account_type.account_type_id"
+    )
     .where("customer_id", "=", customerId)
     .andWhere("account_number", "=", accountNumber)
-    .select("*")
     .then((results) => results)
     .catch((err) => err);
 }
@@ -61,7 +85,6 @@ export async function deleteAccount(accountNumber, customerId) {
 
   //CATCHES IF THE ACCOUNT DOES NOT EXISTS FOR THE REQUESTING USER AND SUBMITS FALSE.
   if (userOwnsAccount <= 0) {
-    console.log(false);
     return false;
   }
 
@@ -72,7 +95,9 @@ export async function deleteAccount(accountNumber, customerId) {
     .del();
 }
 
-// UTILITY FUNCTIONS FOR MODEL
+/**
+ * UTILITY FUNCTIONS FOR MODEL
+ */
 
 function generateAccountNumber() {
   let generatedAccountNumber = Math.random().toString().slice(2, 11);
@@ -102,4 +127,24 @@ function getAccountType(accountTypeName) {
     default:
       break;
   }
+}
+
+export async function createAccountType(type) {
+  await db("account_type").insert({
+    account_type: type,
+  });
+}
+
+// !!!---THIS IS ONLY USED TO SEEDING THE DB TO HAVE A ACCOUNT CREATED BEFORE TRANSACTION DATES.---!!!
+export async function createSeedAccounts(creationDetails) {
+  let accountNumber = generateAccountNumber();
+  let accountType = getAccountType(creationDetails.account_type);
+
+  return await db("account").insert({
+    created_at: creationDetails.created_date,
+    account_number: accountNumber,
+    routing_number: 136090340,
+    account_type_id: accountType,
+    customer_id: creationDetails.customer_id,
+  });
 }
