@@ -1,7 +1,7 @@
 {
   "name": "mthree-bankingInterfaceApi",
   "version": "1.0.0",
-  "description": "This is an API for the Introduction to React Course Backing INterface Assignment",
+  "description": "This is an API for the Introduction to React Course Backing Interface Assignment",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/bin/www.mjs"
